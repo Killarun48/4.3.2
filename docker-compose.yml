@@ -1,0 +1,55 @@
+version: '3'
+
+services:
+  server:
+    image: klakegg/hugo:0.101.0-ext-alpine
+    container_name: hugo
+    command: server
+    entrypoint: hugo
+    volumes:
+      - "./hugo:/src"
+    ports:
+      - "1313:1313"
+    networks:
+        - mylocal
+  app:
+    build: ./proxy
+    container_name: proxy
+    volumes:
+      - "./hugo/content:/app/static"
+    ports:
+      - "8080:8080"
+    networks:
+      - mylocal
+  prometheus:
+    image: ubuntu/prometheus:latest
+    container_name: prome
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus-data:/prometheus
+    networks:
+      - mylocal
+  redis:
+    image: redis:alpine
+    container_name: redis
+    volumes:
+      - ./redis-data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - mylocal
+  grafana:
+    image: killarun/grafana
+    #volumes:
+    #   - ./grafana-data:/var/lib/grafana/data
+      #- ./grafana-config:/etc/grafana/grafana.ini
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - mylocal
+networks:
+    mylocal:
+        driver: bridge
