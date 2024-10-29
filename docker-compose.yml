@@ -41,7 +41,7 @@ services:
     networks:
       - mylocal
   grafana:
-    image: killarun/grafana
+    image: killarun/grafana-amd64
     #volumes:
     #   - ./grafana-data:/var/lib/grafana/data
       #- ./grafana-config:/etc/grafana/grafana.ini

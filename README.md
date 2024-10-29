@@ -2,7 +2,7 @@
 
 Прямая ссылка до дашборда:
 
-http://localhost:3000/d/ee226zmg408owe/kata
+http://localhost:3000/d/fe2a9vdutpipse/kata
 
 ---
 GRAFANA:
